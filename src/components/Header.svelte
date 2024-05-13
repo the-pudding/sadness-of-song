@@ -1,33 +1,44 @@
 <script>
-	import wordmark from "$svg/wordmark.svg";
+	import PuddingLogo from "$components/PuddingLogo.svelte";
 </script>
 
 <header>
-	<div class="wordmark">
-		<a href="https://pudding.cool" aria-label="The Pudding" target="_self"
-			>{@html wordmark}</a
-		>
+	<div class="logo-container">
+		<a href="https://pudding.cool" target="_blank" rel="noopener noreferrer">
+			<PuddingLogo />
+		</a>
 	</div>
+	<h1>The Sadness of Song: How Pop Music is Turning to the Dark Side</h1>
+	<p class="subtitle">
+		An analysis of the emotional landscape of popular music over the last 60
+		years
+	</p>
 </header>
 
 <style>
-	.wordmark {
-		max-width: 10em;
-		margin: 0 auto;
-		padding: 1em 0;
+	header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 40px;
+		text-align: center;
 	}
 
-	.wordmark a {
-		border: none;
-		display: block;
-		color: var(--color-fg);
+	.logo-container {
+		margin-bottom: 20px;
 	}
 
-	.wordmark a:hover {
-		background-color: transparent;
+	h1 {
+		color: var(--heading-color);
+		font-family: var(--font-sans);
+		font-size: 36px;
+		margin-bottom: 10px;
 	}
 
-	:global(.wordmark svg path) {
-		fill: currentColor;
+	.subtitle {
+		color: var(--text-color);
+		font-family: var(--font-serif);
+		font-size: 18px;
+		max-width: 600px;
 	}
 </style>
