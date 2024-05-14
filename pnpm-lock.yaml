@@ -32,12 +32,21 @@ devDependencies:
   d3-array:
     specifier: ^3.2.4
     version: 3.2.4
+  d3-axis:
+    specifier: ^3.0.0
+    version: 3.0.0
   d3-fetch:
     specifier: ^3.0.1
     version: 3.0.1
+  d3-force:
+    specifier: ^3.0.0
+    version: 3.0.0
   d3-scale:
     specifier: ^4.0.2
     version: 4.0.2
+  d3-selection:
+    specifier: ^3.0.0
+    version: 3.0.0
   d3-shape:
     specifier: ^3.2.0
     version: 3.2.0
@@ -77,6 +86,9 @@ devDependencies:
   svelte-preprocess:
     specifier: ^5.1.4
     version: 5.1.4(postcss@8.4.38)(svelte@4.2.16)
+  tippy:
+    specifier: ^0.0.0
+    version: 0.0.0
   vite:
     specifier: ^5.2.11
     version: 5.2.11
@@ -1901,6 +1913,10 @@ packages:
 
   /tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
+    dev: true
+
+  /tippy@0.0.0:
+    resolution: {integrity: sha512-GOrE/mzoeL4t7Q2Bky+7efOZJKH3W95DZIUez+nUns37jHf8R9PEupuEx9F7HolxX+0fzzpKfas2N+LIlYHXAA==}
     dev: true
 
   /tosource@2.0.0-alpha.3:

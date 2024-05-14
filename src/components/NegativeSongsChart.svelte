@@ -3,7 +3,7 @@
 	import { csv } from "d3-fetch";
 	import { scaleTime, scaleLinear } from "d3-scale";
 	import { line } from "d3-shape";
-	import { extent, rollups } from "d3-array";
+	import { extent } from "d3-array";
 	import { timeFormat } from "d3-time-format";
 
 	let data = [];
@@ -11,70 +11,60 @@
 	let height = 400;
 	let chartRef;
 
-	const margin = { top: 20, right: 30, bottom: 30, left: 40 };
-	const chartWidth = width - margin.left - margin.right;
-	const chartHeight = height - margin.top - margin.bottom;
+	$: margin = { top: 20, right: 30, bottom: 30, left: 40 };
+	$: chartWidth = width - margin.left - margin.right;
+	$: chartHeight = height - margin.top - margin.bottom;
 
 	const formatDate = timeFormat("%Y");
 
-	let xScale;
-	let yScale;
-	let chartLine;
+	$: xScale = scaleTime()
+		.domain(extent(data, (d) => d.year))
+		.range([0, chartWidth]);
+
+	$: yScale = scaleLinear().domain([0, 1]).range([chartHeight, 0]);
+
+	$: chartLine = line()
+		.x((d) => xScale(d.year))
+		.y((d) => yScale(d.percentage))
+		.defined((d) => d.year >= new Date("1960") && d.year <= new Date("2020"));
 
 	const processData = (data) => {
-		const filteredData = data.filter((d) => {
+		const filtered = data.filter((d) => {
 			const year = +d.chart_week.slice(0, 4);
 			return year >= 1960 && year <= 2020;
 		});
 
-		const groupedData = rollups(
-			filteredData,
-			(v) => v.length,
-			(d) => d.chart_week.slice(0, 4),
-			(d) => d.Sentiment
-		);
+		const grouped = filtered.reduce((acc, d) => {
+			const year = d.chart_week.slice(0, 4);
+			if (!acc[year]) {
+				acc[year] = { total: 0, negative: 0 };
+			}
+			acc[year].total++;
+			if (d.Sentiment === "Negative") {
+				acc[year].negative++;
+			}
+			return acc;
+		}, {});
 
-		const transformedData = Array.from(groupedData, ([year, sentimentData]) => {
-			const total = sentimentData.reduce(
-				(sum, [sentiment, count]) => sum + count,
-				0
-			);
-			const negativePercentage =
-				(sentimentData.find(([sentiment]) => sentiment === "Negative")?.[1] ||
-					0) / total;
-			return { year: new Date(year), negativePercentage };
-		});
-
-		return transformedData;
+		return Object.entries(grouped).map(([year, { total, negative }]) => ({
+			year: new Date(year),
+			percentage: negative / total
+		}));
 	};
 
 	onMount(async () => {
 		data = processData(await csv("assets/billboard.csv"));
-
-		xScale = scaleTime()
-			.domain(extent(data, (d) => d.year))
-			.range([0, chartWidth]);
-
-		yScale = scaleLinear().domain([0, 1]).range([chartHeight, 0]);
-
-		chartLine = line()
-			.x((d) => xScale(d.year))
-			.y((d) => yScale(d.negativePercentage))
-			.defined((d) => d.year >= new Date("1960") && d.year <= new Date("2020"));
-
-		width = chartRef.clientWidth;
 	});
+
+	function handleResize() {
+		width = chartRef.clientWidth;
+	}
 </script>
 
-<div class="chart-container" bind:this={chartRef}>
+<div class="chart-container" bind:this={chartRef} on:resize={handleResize}>
 	{#if data.length > 0}
 		<h3 class="chart-title">Percentage of Negative Songs Over Time</h3>
-		<svg {width} {height} aria-labelledby="chartTitle chartDesc" role="img">
-			<title id="chartTitle">Percentage of Negative Songs Over Time</title>
-			<desc id="chartDesc"
-				>A line chart showing the percentage of negative songs in the Billboard
-				Hot 100 top 10 from 1960 to 2020.</desc
-			>
+		<svg {width} {height}>
 			<g transform="translate({margin.left}, {margin.top})">
 				<path class="chart-line" d={chartLine(data)} />
 				<g class="x-axis" transform="translate(0, {chartHeight})">
@@ -97,6 +87,11 @@
 				</g>
 			</g>
 		</svg>
+		<p class="chart-description">
+			This chart reveals a clear upward trend in the percentage of songs with a
+			predominantly negative emotional sentiment, particularly since the
+			mid-2010s.
+		</p>
 	{/if}
 </div>
 
@@ -133,5 +128,13 @@
 
 	.tick text {
 		fill: var(--text-color);
+	}
+
+	.chart-description {
+		font-family: var(--font-serif);
+		font-size: 16px;
+		line-height: 1.6;
+		margin-top: 20px;
+		text-align: center;
 	}
 </style>
