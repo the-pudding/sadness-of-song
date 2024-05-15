@@ -8,6 +8,12 @@
 			<PuddingLogo />
 		</a>
 	</div>
+	<img
+		src="assets/cover-art.jpg"
+		alt="Cover art juxtaposing positive and negative imagery in hit songs"
+		class="cover-art"
+	/>
+
 	<h1>The Sadness of Song: How Pop Music is Turning to the Dark Side</h1>
 	<p class="subtitle">
 		An analysis of the emotional landscape of popular music over the last 60
@@ -40,5 +46,12 @@
 		font-family: var(--font-serif);
 		font-size: 18px;
 		max-width: 600px;
+	}
+
+	.cover-art {
+		width: 100%;
+		max-height: 400px;
+		object-fit: cover;
+		margin-bottom: 2rem;
 	}
 </style>

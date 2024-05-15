@@ -26,6 +26,13 @@
 	Or maybe we are entering a new normal, where sadness is the default mode of
 	popular song.
 </p>
+<div class="emotional-journey-image">
+	<img
+		src="assets/emotional-journey-image.jpg"
+		alt="The Emotional Evolution of Popular Music"
+	/>
+	<p class="image-caption">The Emotional Evolution of Popular Music</p>
+</div>
 <p>
 	Regardless, one thing is clear: music has the profound power to reflect and
 	shape our emotions. The songs we listen to are not just background noise; they
@@ -34,3 +41,24 @@
 	is just what we need to feel less alone. After all, in the words of another
 	recent hit, "Everybody hurts sometimes."
 </p>
+
+<style>
+	.emotional-journey-image {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 2rem;
+	}
+
+	.emotional-journey-image img {
+		width: 100%;
+		max-width: 800px;
+		height: auto;
+	}
+
+	.image-caption {
+		font-style: italic;
+		text-align: center;
+		margin-top: 1rem;
+	}
+</style>

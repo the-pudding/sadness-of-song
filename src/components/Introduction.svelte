@@ -1,7 +1,12 @@
 <section class="introduction">
 	<p class="intro-text">
 		In 2017, Julia Michaels' hit song "Issues" took the pop world by storm. With
-		lyrics like "I'm jealous, I'm overzealous / When I'm down, I get real down,"
+		lyrics like:
+	</p>
+	<blockquote>
+		"I'm jealous, I'm overzealous / When I'm down, I get real down,"
+	</blockquote>
+	<p>
 		it laid bare the singer's emotional struggles over a catchy, upbeat melody.
 		The song marked a striking shift in popular music: a mainstream embrace of
 		darker, more negative themes.
