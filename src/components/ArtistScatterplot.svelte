@@ -1,168 +1,192 @@
 <script>
-	import { onMount, tick } from "svelte";
-	import { csv } from "d3-fetch";
-	import { scaleLinear, scaleOrdinal } from "d3-scale";
-	import { extent } from "d3-array";
-	import { forceSimulation, forceX, forceY, forceCollide } from "d3-force";
-	import tippy from "tippy.js";
-	import "tippy.js/dist/tippy.css";
+	import { onMount } from "svelte";
+	import * as d3 from "d3";
 
 	let data = [];
-	let containerWidth = 800;
-	let containerHeight = 600;
-	let chartRef;
+	let width = 0;
+	let height = 600;
+	let margin = { top: 20, right: 20, bottom: 50, left: 100 };
+	let minSongs = 3;
 
-	$: margin = { top: 20, right: 20, bottom: 40, left: 40 };
-	$: chartWidth = containerWidth - margin.left - margin.right;
-	$: chartHeight = containerHeight - margin.top - margin.bottom;
+	let chartWidth = 0;
+	let chartHeight = height - margin.top - margin.bottom;
 
-	$: xScale = scaleLinear().domain([0, 1]).range([0, chartWidth]);
+	let tooltipVisible = false;
+	let tooltipX = 0;
+	let tooltipY = 0;
+	let tooltipText = "";
 
-	$: yScale = scaleLinear().domain([1, 0]).range([0, chartHeight]);
-
-	$: colorScale = scaleOrdinal()
-		.domain(["Positive", "Negative"])
-		.range(["#1f77b4", "#d62728"]);
-
-	const processData = (data) => {
-		const performers = {};
-
-		data.forEach((d) => {
-			const { performer, Sentiment } = d;
-			const artists = performer.split(/[,&]/g).map((p) => p.trim());
-
-			artists.forEach((artist) => {
-				if (!performers[artist]) {
-					performers[artist] = { Positive: 0, Negative: 0 };
-				}
-				performers[artist][Sentiment]++;
-			});
-		});
-
-		return Object.entries(performers).map(([artist, scores]) => {
-			const total = scores.Positive + scores.Negative;
-			return {
-				artist,
-				Positive: scores.Positive / total,
-				Negative: scores.Negative / total,
-				x: 0,
-				y: 0
-			};
-		});
-	};
+	let chartContainer;
 
 	onMount(async () => {
-		data = processData(await csv("assets/billboard.csv"));
-		updateChartDimensions();
-		createForceLayout();
+		const response = await fetch("assets/billboard.csv");
+		const csvData = await response.text();
+		data = await d3.csvParse(csvData, (d) => ({
+			performer: d.performer.split(", "),
+			sentiment: d.Sentiment === "Positive" ? 1 : -1,
+			title: d.title
+		}));
+
+		data = d3.flatRollup(
+			data,
+			(v) => ({
+				sentiment: d3.sum(v, (d) => d.sentiment) / v.length,
+				count: v.length
+			}),
+			(d) => d.performer.join(", ")
+		);
+
+		data = data
+			.map(([performer, { sentiment, count }]) => ({
+				performer,
+				sentiment,
+				count
+			}))
+			.filter((d) => d.count >= minSongs)
+			.sort((a, b) => d3.descending(a.sentiment, b.sentiment));
+
+		if (typeof window !== "undefined") {
+			createChart();
+			window.addEventListener("resize", handleResize);
+		}
+
+		handleResize();
+
+		return () => {
+			if (typeof window !== "undefined") {
+				window.removeEventListener("resize", handleResize);
+			}
+		};
 	});
 
-	async function createForceLayout() {
-		const simulation = forceSimulation(data)
-			.force("x", forceX((d) => xScale(d.Positive)).strength(1))
-			.force("y", forceY((d) => yScale(d.Negative)).strength(1))
-			.force("collide", forceCollide(8))
-			.on("tick", () => {
-				data = data.map((d, i) => ({
-					...d,
-					x: simulation.nodes()[i].x,
-					y: simulation.nodes()[i].y
-				}));
-			});
-
-		await tick();
+	function handleResize() {
+		console.log(chartContainer);
+		if (chartContainer) {
+			width = chartContainer.clientWidth;
+			chartWidth = width - margin.left - margin.right;
+			createChart();
+		}
 	}
 
-	function updateChartDimensions() {
-		containerWidth = chartRef.clientWidth;
-		containerHeight = chartRef.clientHeight;
+	function createChart() {
+		const svg = d3.select("#chart");
+
+		svg.selectAll("*").remove();
+
+		svg.attr("width", width).attr("height", height);
+
+		const y = d3
+			.scaleLinear()
+			.domain(d3.extent(data, (d) => d.sentiment))
+			.range([chartHeight, 0]);
+
+		const radius = d3
+			.scaleSqrt()
+			.domain([0, d3.max(data, (d) => d.count)])
+			.range([0, 10]);
+
+		const simulation = d3
+			.forceSimulation(data)
+			.force("x", d3.forceX(chartWidth / 2))
+			.force(
+				"y",
+				d3.forceY((d) => y(d.sentiment))
+			)
+			.force(
+				"collision",
+				d3.forceCollide().radius((d) => radius(d.count) + 2)
+			)
+			.stop();
+
+		for (let i = 0; i < 300; ++i) simulation.tick();
+
+		svg
+			.append("g")
+			.attr("transform", `translate(${margin.left},${margin.top})`)
+			.selectAll("circle")
+			.data(data)
+			.enter()
+			.append("circle")
+			.attr("cx", (d) => d.x)
+			.attr("cy", (d) => d.y)
+			.attr("r", (d) => radius(d.count))
+			.attr("fill", (d) =>
+				d.sentiment > 0 ? "var(--chart-color-2)" : "var(--chart-color-1)"
+			)
+			.attr("tabindex", "0")
+			.attr("role", "graphics-symbol")
+			.attr("aria-roledescription", "circle")
+			.attr(
+				"aria-label",
+				(d) =>
+					`${d.performer}: Sentiment ${d.sentiment.toFixed(2)}, Songs ${d.count}`
+			)
+			.on("mouseover focus", function (event, d) {
+				d3.select(this).attr("opacity", 0.8);
+				tooltipVisible = true;
+				tooltipX = event.pageX;
+				tooltipY = event.pageY;
+				tooltipText = d.performer;
+			})
+			.on("mouseout blur", function () {
+				d3.select(this).attr("opacity", 1);
+				tooltipVisible = false;
+			})
+			.on("click", function (event, d) {
+				if (tooltipVisible && tooltipText === d.performer) {
+					tooltipVisible = false;
+				} else {
+					tooltipVisible = true;
+					tooltipX = event.pageX;
+					tooltipY = event.pageY;
+					tooltipText = d.performer;
+				}
+			});
+
+		// Add x-axis label
+		svg
+			.append("text")
+			.attr("class", "x-label")
+			.attr("text-anchor", "middle")
+			.attr("x", width / 2)
+			.attr("y", height - 10)
+			.text("Performer");
+
+		// Add y-axis label
+		svg
+			.append("text")
+			.attr("class", "y-label")
+			.attr("text-anchor", "middle")
+			.attr("transform", "rotate(-90)")
+			.attr("x", -height / 2)
+			.attr("y", 20)
+			.text("Sentiment Score");
 	}
 </script>
 
-<div class="chart-container" bind:this={chartRef}>
-	{#if data.length > 0}
-		<h3 class="chart-title">Artist Sentiment Scatterplot</h3>
-		<svg width={containerWidth} height={containerHeight}>
-			<g transform="translate({margin.left}, {margin.top})">
-				<g class="x-axis" transform="translate(0, {chartHeight})">
-					<text x={chartWidth / 2} y={margin.bottom / 2} text-anchor="middle"
-						>Positive</text
-					>
-				</g>
-				<g class="y-axis">
-					<text
-						x={-margin.left / 2}
-						y={chartHeight / 2}
-						text-anchor="middle"
-						transform="rotate(-90)">Negative</text
-					>
-				</g>
-				{#each data as d}
-					<circle
-						cx={d.x}
-						cy={d.y}
-						r="5"
-						fill={colorScale(d.Positive > d.Negative ? "Positive" : "Negative")}
-						stroke="white"
-						stroke-width="1"
-						data-tippy-content="{d.artist}<br>Positive: {(
-							d.Positive * 100
-						).toFixed(1)}%<br>Negative: {(d.Negative * 100).toFixed(1)}%"
-						on:mouseover={(event) => {
-							tippy(event.target, {
-								content: event.target.dataset.tippyContent,
-								allowHTML: true,
-								interactive: true,
-								theme: "light"
-							});
-						}}
-					/>
-				{/each}
-			</g>
-		</svg>
-		<p class="chart-description">
-			This scatterplot shows the distribution of artists based on the sentiment
-			of their songs. Each circle represents an artist, positioned according to
-			the proportion of their songs classified as positive or negative.
-		</p>
+<div class="chart-container" bind:this={chartContainer}>
+	<svg id="chart" {width} {height}>
+		<title>Artist Sentiment Scores</title>
+	</svg>
+	{#if tooltipVisible}
+		<div
+			class="tooltip"
+			style="left: {tooltipX}px; top: {tooltipY}px; background-color: white; color: black; padding: 5px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); z-index: 9999;"
+		>
+			{tooltipText}
+		</div>
 	{/if}
 </div>
 
 <style>
 	.chart-container {
 		width: 100%;
-		max-width: 800px;
-		height: 600px;
-		margin: 0 auto;
+		height: 100%;
+		position: relative;
 	}
 
-	.chart-title {
-		font-family: var(--font-sans);
-		font-size: 20px;
-		margin-bottom: 10px;
-		text-align: center;
-	}
-
-	.x-axis,
-	.y-axis {
-		font-family: var(--font-sans);
-		font-size: 12px;
-	}
-
-	.tick line {
-		stroke: var(--text-color);
-		stroke-opacity: 0.2;
-	}
-
-	.tick text {
-		fill: var(--text-color);
-	}
-
-	.chart-description {
-		font-family: var(--font-serif);
-		font-size: 16px;
-		line-height: 1.6;
-		margin-top: 20px;
-		text-align: center;
+	:global(.x-label, .y-label) {
+		font-size: 14px;
+		font-weight: bold;
 	}
 </style>
