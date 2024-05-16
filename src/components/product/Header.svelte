@@ -1,5 +1,5 @@
 <script>
-	import PuddingLogo from "$components/PuddingLogo.svelte";
+	import PuddingLogo from "$components/product/PuddingLogo.svelte";
 </script>
 
 <header>

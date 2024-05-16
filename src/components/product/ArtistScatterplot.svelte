@@ -60,7 +60,6 @@
 	});
 
 	function handleResize() {
-		console.log(chartContainer);
 		if (chartContainer) {
 			width = chartContainer.clientWidth;
 			chartWidth = width - margin.left - margin.right;
