@@ -14,6 +14,8 @@
 
 <div id="process" class:visible={$side === "left"}>
 	<article>
+		<div><strong>Use left/right arrow keys to move between sides.</strong></div>
+
 		{#each copy.chats as { prompt, response }}
 			<Chat {prompt} {response} />
 		{/each}
@@ -39,6 +41,6 @@
 	}
 	article {
 		max-width: 800px;
-		margin: auto;
+		margin: 3rem auto;
 	}
 </style>
