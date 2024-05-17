@@ -6,8 +6,10 @@
 /* colors defined in variables.css */
 :root {
 	/* font */
-	--font-sans: "Atlas Grotesk", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
-	--font-serif: "Tiempos Text Web", Iowan Old Style, Times New Roman, Times, serif;
+	--font-sans: "Atlas Grotesk", -apple-system, BlinkMacSystemFont, Helvetica,
+		Arial, sans-serif;
+	--font-serif: "Tiempos Text Web", Iowan Old Style, Times New Roman, Times,
+		serif;
 	--font-mono: Menlo, Consolas, Monaco, monospace;
 
 	/* z-index */
@@ -15,20 +17,6 @@
 	--z-middle: 0;
 	--z-top: 100;
 	--z-overlay: 1000;
-
-	--background-color: #1d1f21;
-  --text-color: #e6e6e6;
-  --heading-color: #ffffff;
-  --accent-color: #61afef;
-
-  --chart-color-1: #e06c75;
-  --chart-color-2: #98c379;
-  --chart-color-3: #e5c07b;
-  --chart-color-4: #56b6c2;
-  --chart-color-5: #c678dd;
-  --chart-color-6: #61afef;
-  --chart-color-7: #c49c94;
-  --chart-color-8: #f19c99;
 
 	/* "1" second duration */
 	--1s: 1ms;
@@ -71,7 +59,12 @@ body {
 }
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-family: var(--font-serif);
 	color: var(--heading-color);
 	font-weight: bold;
@@ -107,7 +100,6 @@ blockquote {
 	padding-left: 1rem;
 	margin: 1.5rem 0;
 }
-
 
 svg text {
 	fill: white;

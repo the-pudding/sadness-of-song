@@ -1,1 +1,251 @@
-{"title":"Title TK","description":"Description tk."}
+{
+	"chats": [
+		{
+			"prompt": [
+				{
+					"type": "text",
+					"value": "We want you to be a freelance contributor for The Pudding. I will give you all the prompts and guidance you need. I will also serve as your editor. You need to create a story for publication from start to finish, from idea to code - I will help with deployment and all the infrastructure stuff. Make sense?"
+				}
+			],
+			"response": [
+				{
+					"type": "text",
+					"value": "That sounds like an exciting opportunity! I'm ready to help you create engaging and informative stories for The Pudding. Please go ahead and provide me with the first prompt or guidance on the topic you’d like to explore. We can brainstorm ideas, analyze data, draft the story, and refine it together until it’s ready for publication. What’s our first project?"
+				}
+			]
+		},
+		{
+			"prompt": [
+				{
+					"type": "text",
+					"value": "First, are you familiar with The Pudding (aka pudding.cool)?"
+				}
+			],
+			"response": [
+				{
+					"type": "text",
+					"value": "Yes, I'm familiar with The Pudding! It’s known for its visually engaging, data-driven journalism. The Pudding often uses thorough analyses and creative visual storytelling to explore complex and intriguing topics, ranging from cultural phenomena to trends in music, sports, and much more. It’s a unique platform that blends quantitative insights with qualitative narrative in a very accessible and visually appealing way. What specific area or topic are we thinking about exploring for your next piece?"
+				}
+			]
+		},
+		{
+			"prompt": [
+				{
+					"type": "text",
+					"value": "This is our pitch form. Please give us 3 ideas, and answer all questions for each one. Be as specific as possible and if you’re using data, make sure you have an idea of how you will obtain and analyze the data."
+				},
+				{ "type": "text", "value": "Pitch form questions:" },
+				{
+					"type": "text",
+					"value": "1. What is your story about? The elevator pitch, if you will."
+				},
+				{
+					"type": "text",
+					"value": "2. Can you summarize in one sentence the single point you’re making? Think of it as a snappy headline or distillation. It should not be in the form of a question."
+				},
+				{
+					"type": "text",
+					"value": "3. Why is it exciting to you? Why do *you* want to tell this story?"
+				},
+				{
+					"type": "text",
+					"value": "4. What makes this story interesting and sets it apart from others?"
+				},
+				{
+					"type": "text",
+					"value": "5. What will be the “aha” moment for the audience, or the surprising element?"
+				},
+				{
+					"type": "text",
+					"value": "6. Provide one or more feasible options for data sources."
+				},
+				{
+					"type": "text",
+					"value": "7. Describe some ideas for the core visuals of this piece. What do you imagine the piece will look like? What’s the first thing you’d draw on a whiteboard?"
+				}
+			],
+			"response": [
+				{
+					"type": "text",
+					"value": "Certainly! Here are three refined pitches with responses to the specific questions in your form:"
+				},
+				{
+					"type": "text",
+					"value": "### Pitch 1: The Evolution of Video Game Soundtracks"
+				},
+				{ "type": "text", "value": "1. **What is your story about?**" },
+				{
+					"type": "text",
+					"value": "- This story explores the evolution of video game soundtracks, analyzing how they have influenced popular music genres and vice versa."
+				},
+				{
+					"type": "text",
+					"value": "2. **Can you summarize in one sentence the single point you’re making?**"
+				},
+				{
+					"type": "text",
+					"value": "- Video game soundtracks have not only enhanced gaming experiences but also significantly shaped music trends over decades."
+				},
+				{
+					"type": "text",
+					"value": "3. **Why is it exciting to you? Why do *you* want to tell this story?**"
+				},
+				{
+					"type": "text",
+					"value": "- As a music enthusiast and gamer, the intersection of video game music and its cultural impact fascinates me. Unveiling how these soundtracks have transcended gaming to influence mainstream music offers a new appreciation of their artistic significance."
+				},
+				{
+					"type": "text",
+					"value": "4. **What makes this story interesting and sets it apart from others?**"
+				},
+				{
+					"type": "text",
+					"value": "- Unlike traditional music industry analyses, this story taps into the niche yet expansive world of gaming to reveal its underrated influence on popular music, highlighting composers and iconic soundtracks that have left a lasting mark on the music industry."
+				},
+				{
+					"type": "text",
+					"value": "5. **What will be the “aha” moment for the audience, or the surprising element?**"
+				},
+				{
+					"type": "text",
+					"value": "- Discovering specific video game soundtracks that have inspired popular songs or genres might surprise many, revealing unexpected connections between gaming and popular music culture."
+				},
+				{
+					"type": "text",
+					"value": "6. **Provide one or more feasible options for data sources.**"
+				},
+				{
+					"type": "text",
+					"value": "- Data from video game databases like IGDB, music streaming platforms like Spotify for soundtrack streams, sales data from music and game retailers, and social media analysis for fan discussions."
+				},
+				{
+					"type": "text",
+					"value": "7. **Describe some ideas for the core visuals of this piece.**"
+				},
+				{
+					"type": "text",
+					"value": "- Interactive timelines showing the release of key soundtracks alongside pivotal moments in music history. Graphs comparing the popularity of soundtracks with music chart successes. Audio clips embedded within the essay to provide a multimedia experience."
+				},
+				{
+					"type": "text",
+					"value": "### Pitch 2: Global School Lunches: A Visual Comparison"
+				},
+				{ "type": "text", "value": "1. **What is your story about?**" },
+				{
+					"type": "text",
+					"value": "- A visual exploration of what school lunches look like around the world, reflecting each country's cultural priorities and nutritional standards."
+				},
+				{
+					"type": "text",
+					"value": "2. **Can you summarize in one sentence the single point you’re making?**"
+				},
+				{
+					"type": "text",
+					"value": "- School lunches around the globe reveal not just diverse culinary cultures but also varying governmental priorities in child nutrition."
+				},
+				{
+					"type": "text",
+					"value": "3. **Why is it exciting to you? Why do *you* want to tell this story?**"
+				},
+				{
+					"type": "text",
+					"value": "- Food is a universal language, and exploring it through the lens of school lunches offers insights into global cultural differences and societal values related to children's health and education."
+				},
+				{
+					"type": "text",
+					"value": "4. **What makes this story interesting and sets it apart from others?**"
+				},
+				{
+					"type": "text",
+					"value": "- It's a blend of cultural anthropology and nutritional science, presented through a unique, universally relatable subject—what kids eat at school."
+				},
+				{
+					"type": "text",
+					"value": "5. **What will be the “aha” moment for the audience, or the surprising element?**"
+				},
+				{
+					"type": "text",
+					"value": "- Visualizing the stark differences in nutritional content and portion sizes can dramatically highlight global disparities in child nutrition and welfare."
+				},
+				{
+					"type": "text",
+					"value": "6. **Provide one or more feasible options for data sources.**"
+				},
+				{
+					"type": "text",
+					"value": "- Government and educational reports on school meal programs, nutritional studies, first-hand surveys with schools, and photo contributions from international teachers and students."
+				},
+				{
+					"type": "text",
+					"value": "7. **Describe some ideas for the core visuals of this piece.**"
+				},
+				{
+					"type": "text",
+					"value": "- A global map with interactive elements allowing users to click on a country and see a typical meal, nutritional facts, and cultural notes. Comparative photo galleries of meals from different countries."
+				},
+				{
+					"type": "text",
+					"value": "### Pitch 3: The Rise and Impact of Fan Fiction"
+				},
+				{ "type": "text", "value": "1. **What is your story about?**" },
+				{
+					"type": "text",
+					"value": "- This visual essay examines the explosion of fan fiction writing, exploring how these communities influence mainstream media and reshape narratives."
+				},
+				{
+					"type": "text",
+					"value": "2. **Can you summarize in one sentence the single point you’re making?**"
+				},
+				{
+					"type": "text",
+					"value": "- Fan fiction is more than a creative outlet; it's a cultural phenomenon that actively shapes and sometimes challenges the mainstream media landscape."
+				},
+				{
+					"type": "text",
+					"value": "3. **Why is it exciting to you? Why do *you* want to tell this story?**"
+				},
+				{
+					"type": "text",
+					"value": "- I'm intrigued by the power of grassroots literary movements and how they empower individuals to influence major media narratives, offering a voice to often underrepresented perspectives."
+				},
+				{
+					"type": "text",
+					"value": "4. **What makes this story interesting and sets it apart from others?**"
+				},
+				{
+					"type": "text",
+					"value": "- It delves into the impact of fan-created content on original works, highlighting cases where fan fiction has directly inspired or altered official media productions."
+				},
+				{
+					"type": "text",
+					"value": "5. **What will be the “aha” moment for the audience, or the surprising element?**"
+				},
+				{
+					"type": "text",
+					"value": "- Revealing instances where fan fiction has led to real-world changes in media productions or has been acknowledged by creators, illustrating its tangible impact on mainstream culture."
+				},
+				{
+					"type": "text",
+					"value": "6. **Provide one or more feasible options for data sources.**"
+				},
+				{
+					"type": "text",
+					"value": "- Data scraping from fan fiction repositories like Archive of Our Own, analysis of trends in fan fiction topics over time, surveys of fan fiction writers and readers, and interviews with media producers."
+				},
+				{ "type": "text", "value": "7. **Describe some" },
+				{
+					"type": "text",
+					"value": "ideas for the core visuals of this piece.**"
+				},
+				{
+					"type": "text",
+					"value": "- Network graphs showing the relationships between fan fiction works and original media. Bar charts and line graphs tracking the growth of fan fiction communities. Interactive segments displaying quotes and excerpts from influential fan fiction works."
+				},
+				{
+					"type": "text",
+					"value": "Each pitch is designed to leverage The Pudding's strengths in visual storytelling and data-driven journalism, focusing on unique narratives that offer both depth and broad appeal."
+				}
+			]
+		}
+	]
+}

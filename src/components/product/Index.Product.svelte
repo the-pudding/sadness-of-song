@@ -8,9 +8,10 @@
 	import Conclusion from "$components/product/Conclusion.svelte";
 	import Methodology from "$components/product/Methodology.svelte";
 	import Footer from "$components/product/Footer.svelte";
+	import {side} from '$stores/misc.js';
 </script>
 
-<div id="product">
+<div id="product" class:visible={$side === 'right'}>
 	<article>
 		<Header />
 
@@ -90,9 +91,31 @@
 </div>
 
 <style>
+	/* added by humans */
 	#product {
 		width: 90vw;
+		background: var(--background-color);
+		opacity: 0.2;
+		transition: opacity calc(var(--1s) * 0.4);
 	}
+	#product.visible {
+		opacity: 1;
+	}
+	:global(#product) {
+		--background-color: #1d1f21;
+		--text-color: #e6e6e6;
+		--heading-color: #ffffff;
+		--accent-color: #61afef;
+		--chart-color-1: #e06c75;
+		--chart-color-2: #98c379;
+		--chart-color-3: #e5c07b;
+		--chart-color-4: #56b6c2;
+		--chart-color-5: #c678dd;
+		--chart-color-6: #61afef;
+		--chart-color-7: #c49c94;
+		--chart-color-8: #f19c99;
+	}
+	/*****/
 
 	article {
 		background-color: var(--background-color);

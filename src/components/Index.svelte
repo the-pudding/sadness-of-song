@@ -31,6 +31,6 @@
 	.inner {
 		display: flex;
 		width: 180vw;
-		transition: transform calc(var(--1s) * 0.8);
+		transition: transform calc(var(--1s) * 0.5);
 	}
 </style>
