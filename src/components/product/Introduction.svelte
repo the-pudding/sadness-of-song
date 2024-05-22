@@ -39,7 +39,6 @@
 	.intro-text {
 		color: var(--text-color);
 		font-family: var(--font-serif);
-		font-size: 18px;
 		line-height: 1.6;
 		margin-bottom: 20px;
 	}
