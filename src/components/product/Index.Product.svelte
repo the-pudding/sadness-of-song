@@ -8,10 +8,10 @@
 	import Conclusion from "$components/product/Conclusion.svelte";
 	import Methodology from "$components/product/Methodology.svelte";
 	import Footer from "$components/product/Footer.svelte";
-	import {side} from '$stores/misc.js';
+	import { side } from "$stores/misc.js";
 </script>
 
-<div id="product" class:visible={$side === 'right'}>
+<div id="product" class:visible={$side === "right"}>
 	<article>
 		<Header />
 
@@ -93,7 +93,7 @@
 <style>
 	/* added by humans */
 	#product {
-		width: 90vw;
+		width: 100%;
 		background: var(--background-color);
 		opacity: 0.2;
 		transition: opacity calc(var(--1s) * 0.4);
